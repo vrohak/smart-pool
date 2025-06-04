@@ -49,3 +49,11 @@ services:
     volumes:
       - ./influxdb3/data:/var/lib/influxdb3/node0
     restart: unless-stopped
+
+  mqtt_api:
+    build: ./mqtt_api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mosquitto
+
