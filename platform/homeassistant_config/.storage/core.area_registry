@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "minor_version": 8,
+  "key": "core.area_registry",
+  "data": {
+    "areas": [
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": "mdi:pool",
+        "id": "pool",
+        "labels": [],
+        "name": "Bazen 1",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2025-06-04T00:57:08.482504+00:00",
+        "modified_at": "2025-06-04T09:22:52.720026+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": "mdi:border-outside",
+        "id": "surround",
+        "labels": [],
+        "name": "Okolina",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2025-06-04T00:59:36.627536+00:00",
+        "modified_at": "2025-06-04T01:07:21.814290+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": "mdi:pool",
+        "id": "bazen_2",
+        "labels": [],
+        "name": "Bazen 2",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2025-06-04T08:24:55.061803+00:00",
+        "modified_at": "2025-06-04T08:24:55.061807+00:00"
+      }
+    ]
+  }
+}

@@ -1,0 +1,536 @@
+[
+    {
+        "id": "82b036b565dac812",
+        "type": "tab",
+        "label": "MQTT To InfluxDB",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f48f1f0d8002d0ad",
+        "type": "tab",
+        "label": "Automatic Heating",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e77f4fef293b1b18",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 5,
+        "addon": false,
+        "rejectUnauthorizedCerts": false,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": 30,
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": ": ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "default",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": false
+    },
+    {
+        "id": "0cda577d15322cef",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "InfluxDB 3 Core",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb3-core:8181",
+        "timeout": 10,
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "7e4bc5d6059ecfa4",
+        "type": "mqtt-broker",
+        "name": "MQTT Broker",
+        "broker": "mosquitto",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fn_sensor",
+        "type": "function",
+        "z": "82b036b565dac812",
+        "name": "format sensor_data",
+        "func": "const m = msg.data.new_state;\n\nlet sensorFullName = msg.topic.split('.');\nlet sensorEntityIdParts = sensorFullName[1].split('_');\n\nconst poolId = sensorEntityIdParts[0];\nconst sensorId = sensorEntityIdParts.slice(1).join('_'); \n\nconst value = parseFloat(m.state);\nif (isNaN(value)) return null;\n\nmsg.measurement = 'sensor_data';\nmsg.payload = {\n    pool_id: poolId,\n    sensor: sensorId,\n    value: value,\n    unit: m.attributes.unit_of_measurement || ''\n};\nmsg.timestamp = new Date(m.last_changed).getTime() * 1e6; // in ns\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "out_influx",
+                "d59b61707bf7bf35"
+            ]
+        ]
+    },
+    {
+        "id": "fn_heater",
+        "type": "function",
+        "z": "82b036b565dac812",
+        "name": "format heater_state",
+        "func": "const m = msg.data.new_state;\nmsg.measurement = 'heater_state';\nmsg.tags = { heater: 'heater1' };\nmsg.payload = { state: m.state === 'on' ? 1 : 0 };\nmsg.timestamp = new Date(m.last_changed).getTime()*1e6;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "out_influx",
+                "066445247f38576a"
+            ]
+        ]
+    },
+    {
+        "id": "out_influx",
+        "type": "influxdb out",
+        "z": "82b036b565dac812",
+        "influxdb": "0cda577d15322cef",
+        "name": "Write to InfluxDB3",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "smartpool",
+        "x": 840,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "evt_sensor1",
+        "type": "server-state-changed",
+        "z": "82b036b565dac812",
+        "name": "Pool sensors",
+        "server": "e77f4fef293b1b18",
+        "version": 6,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "sensor.pool1_chlorine",
+                "sensor.pool1_water_level",
+                "sensor.pool2_water_level",
+                "sensor.pool1_water_temp",
+                "sensor.pool2_water_temp",
+                "sensor.pool1_air_temp"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": false,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "fn_sensor",
+                "ddbe07face07d4dd"
+            ]
+        ]
+    },
+    {
+        "id": "evt_heater1",
+        "type": "server-state-changed",
+        "z": "82b036b565dac812",
+        "name": "Heater switch",
+        "server": "e77f4fef293b1b18",
+        "version": 6,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "switch.pool1_heater"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": false,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 290,
+        "y": 400,
+        "wires": [
+            [
+                "fn_heater",
+                "d03dcab9b09f52c8"
+            ]
+        ]
+    },
+    {
+        "id": "d59b61707bf7bf35",
+        "type": "debug",
+        "z": "82b036b565dac812",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "066445247f38576a",
+        "type": "debug",
+        "z": "82b036b565dac812",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d03dcab9b09f52c8",
+        "type": "debug",
+        "z": "82b036b565dac812",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ddbe07face07d4dd",
+        "type": "debug",
+        "z": "82b036b565dac812",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f08ef67ac51e4574",
+        "type": "server-state-changed",
+        "z": "f48f1f0d8002d0ad",
+        "name": "Water temperature changed",
+        "server": "e77f4fef293b1b18",
+        "version": 6,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "sensor.pool1_water_temp"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 240,
+        "y": 220,
+        "wires": [
+            [
+                "2ce6857d283da099"
+            ]
+        ]
+    },
+    {
+        "id": "2ce6857d283da099",
+        "type": "switch",
+        "z": "f48f1f0d8002d0ad",
+        "name": "Check Temperature",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "10.0",
+                "vt": "num"
+            },
+            {
+                "t": "gte",
+                "v": "20.0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "a5b16b4520040650",
+                "e12526e78d17ceea"
+            ],
+            [
+                "86a0811def0d76e0",
+                "bc210b674338b0b2"
+            ]
+        ]
+    },
+    {
+        "id": "7ac90fc69bbbf95e",
+        "type": "mqtt out",
+        "z": "f48f1f0d8002d0ad",
+        "name": "Heater ON",
+        "topic": "smartpool/1/heater/set",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7e4bc5d6059ecfa4",
+        "x": 1050,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "d132b7a972d57e0f",
+        "type": "mqtt out",
+        "z": "f48f1f0d8002d0ad",
+        "name": "Heater OFF",
+        "topic": "smartpool/1/heater/set",
+        "qos": "",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7e4bc5d6059ecfa4",
+        "x": 1070,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "a5b16b4520040650",
+        "type": "debug",
+        "z": "f48f1f0d8002d0ad",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "86a0811def0d76e0",
+        "type": "debug",
+        "z": "f48f1f0d8002d0ad",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "bc210b674338b0b2",
+        "type": "function",
+        "z": "f48f1f0d8002d0ad",
+        "name": "Setting OFF message",
+        "func": "msg.payload = \"OFF\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 320,
+        "wires": [
+            [
+                "d132b7a972d57e0f"
+            ]
+        ]
+    },
+    {
+        "id": "e12526e78d17ceea",
+        "type": "function",
+        "z": "f48f1f0d8002d0ad",
+        "name": "Setting ON message",
+        "func": "msg.payload = \"ON\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 80,
+        "wires": [
+            [
+                "7ac90fc69bbbf95e"
+            ]
+        ]
+    }
+]

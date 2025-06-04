@@ -1,0 +1,52 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  sensor:
+    - name: "Temperatura vode"
+      state_topic: "smartpool/1/sensor/water_temp"
+      unique_id: water_temp_1
+      unit_of_measurement: "°C"
+
+    - name: "Razina vode"
+      state_topic: "smartpool/1/sensor/water_level"
+      unique_id: water_level_1
+      unit_of_measurement: "%"
+
+    - name: "Klor"
+      state_topic: "smartpool/1/sensor/chlorine"
+      unique_id: chlorine_1
+      unit_of_measurement: "mg/L"
+
+    - name: "Temperatura zraka"
+      state_topic: "smartpool/1/sensor/air_temp"
+      unique_id: air_temp_1
+      unit_of_measurement: "°C"
+      
+    - name: "Temperatura vode"
+      state_topic: "smartpool/2/sensor/water_temp"
+      unique_id: water_temp_2
+      unit_of_measurement: "°C"
+
+    - name: "Razina vode"
+      state_topic: "smartpool/2/sensor/water_level"
+      unique_id: water_level_2
+      unit_of_measurement: "%"
+
+  switch:
+    - name: "Grijač"
+      state_topic: "smartpool/1/heater/state"
+      command_topic: "smartpool/1/heater/set"
+      unique_id: heater_1
+      payload_on: "ON"
+      payload_off: "OFF"
+      retain: true

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "minor_version": 9,
+  "key": "core.device_registry",
+  "data": {
+    "devices": [
+      {"area_id":null,"config_entries":["01JWW5JQBYNMD0HCFXNTP9JGRX"],"config_entries_subentries":{"01JWW5JQBYNMD0HCFXNTP9JGRX":[null]},"configuration_url":null,"connections":[],"created_at":"2025-06-04T00:31:10.208020+00:00","disabled_by":null,"entry_type":"service","hw_version":null,"id":"d98ef5cc4bf02f23f4704cc6724d8424","identifiers":[["sun","01JWW5JQBYNMD0HCFXNTP9JGRX"]],"labels":[],"manufacturer":null,"model":null,"model_id":null,"modified_at":"2025-06-04T00:31:10.208055+00:00","name_by_user":null,"name":"Sun","primary_config_entry":"01JWW5JQBYNMD0HCFXNTP9JGRX","serial_number":null,"sw_version":null,"via_device_id":null},
+      {"area_id":null,"config_entries":["01JWW5JQGSR8CKX9M1PNYQGPS6"],"config_entries_subentries":{"01JWW5JQGSR8CKX9M1PNYQGPS6":[null]},"configuration_url":"homeassistant://config/backup","connections":[],"created_at":"2025-06-04T00:31:10.375370+00:00","disabled_by":null,"entry_type":"service","hw_version":null,"id":"93e81798aaafb4f62f77b478f12bdf67","identifiers":[["backup","backup_manager"]],"labels":[],"manufacturer":"Home Assistant","model":"Home Assistant Backup","model_id":null,"modified_at":"2025-06-04T00:31:10.375403+00:00","name_by_user":null,"name":"Backup","primary_config_entry":"01JWW5JQGSR8CKX9M1PNYQGPS6","serial_number":null,"sw_version":"2025.5.3","via_device_id":null},
+      {"area_id":null,"config_entries":["01JWW5NW1N1ZP383WHZBF26CBT"],"config_entries_subentries":{"01JWW5NW1N1ZP383WHZBF26CBT":[null]},"configuration_url":"https://www.met.no/en","connections":[],"created_at":"2025-06-04T00:32:53.501514+00:00","disabled_by":null,"entry_type":"service","hw_version":null,"id":"d41cee541adde5e9483b0f4b5fc01ed6","identifiers":[["met","01JWW5NW1N1ZP383WHZBF26CBT"]],"labels":[],"manufacturer":"Met.no","model":"Forecast","model_id":null,"modified_at":"2025-06-04T00:32:53.501556+00:00","name_by_user":null,"name":"Forecast","primary_config_entry":"01JWW5NW1N1ZP383WHZBF26CBT","serial_number":null,"sw_version":null,"via_device_id":null}
+    ],
+    "deleted_devices": []
+  }
+}

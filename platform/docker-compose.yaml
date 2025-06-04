@@ -1,0 +1,51 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    volumes:
+      - ./homeassistant_config:/config
+    ports:
+      - "8123:8123"
+    environment:
+      - TZ=Europe/Zagreb
+    restart: unless-stopped
+    privileged: true
+    depends_on:
+      - mosquitto
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered_data:/data
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+  
+  influxdb3-core:
+    container_name: influxdb3-core
+    image: influxdb:3-core
+    ports:
+      - "8181:8181"
+    command:
+      - influxdb3
+      - serve
+      - --node-id=node0
+      - --object-store=file
+      - --data-dir=/var/lib/influxdb3
+    volumes:
+      - ./influxdb3/data:/var/lib/influxdb3/node0
+    restart: unless-stopped
