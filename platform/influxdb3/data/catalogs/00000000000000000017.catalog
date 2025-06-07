@@ -1,0 +1,1 @@
+idb3.003.lOg{"catalog_batch":{"Node":{"time_ns":1749327073202839152,"node_catalog_id":0,"node_id":"node0","ops":[{"StopNode":{"node_id":"node0","stopped_time_ns":1749327073202839152,"process_uuid":"bf249f88-6e54-4c8c-82b3-78c1bc975e93"}}]}},"sequence_number":17}

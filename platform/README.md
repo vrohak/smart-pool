@@ -14,6 +14,12 @@ Za virtualni uređaj na bazenu 2, pokrenite virtual_device.py
 
 ## Home Assistant
 
+Provjerite Entity ID na svakom od senzora i aktuatora i ukoliko vam nisu u ovom obliku, promijenite ručno u takav oblik (<poolID>_<naziv>):
+pool1_chlorine
+pool1_heater
+pool2_water_level
+...
+
 Ako želite resetirati povijest metrika u home assistant, dovoljno je obrisati bazu podataka 
 (homeassistant_config/home-assistant_v2.db) i ponovno pokrenuti home assistant.
 
