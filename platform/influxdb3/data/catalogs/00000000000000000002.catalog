@@ -1,0 +1,1 @@
+idb3.003.lﬂ”T{"catalog_batch":{"Node":{"time_ns":1749467908202919268,"node_catalog_id":0,"node_id":"node0","ops":[{"RegisterNode":{"node_id":"node0","instance_id":"63f7f2e6-8899-40fa-8881-c715798933d0","registered_time_ns":1749467908202919268,"core_count":12,"mode":["Core"],"process_uuid":"d7afa8a4-e318-4e07-a7ed-15e97c347699"}}]}},"sequence_number":2}

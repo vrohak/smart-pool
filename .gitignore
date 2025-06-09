@@ -147,11 +147,12 @@ home-assistant.db
 home-assistant_v2.db
 home-assistant_v2.db-*
 
+
 secrets.yaml
 
 # automatically downloaded dependencies
-deps
-lib
+platform/homeassistant_config/deps/
+platform/nodered/data/lib/
 
 # Log files
 home-assistant.log
@@ -167,7 +168,7 @@ ozw_log.txt
 mosquitto.db
 
 #influxdb3
-influxdb3/data
+platform/influxdb3/data/wal/
 
 # docker mac
 
