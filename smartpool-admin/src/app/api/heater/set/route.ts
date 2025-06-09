@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { connect as mqttConnect } from 'mqtt';
 
 export async function POST(request: Request) {
   try {
@@ -8,21 +7,25 @@ export async function POST(request: Request) {
       state: 'on' | 'off';
     };
 
-    const client = mqttConnect(process.env.MQTT_BROKER_URL!);
-    await new Promise<void>((resolve, reject) => {
-      client.on('connect', () => resolve());
-      client.on('error', (err) => reject(err));
-    });
+    const apiUrl = process.env.IOT_API_URL!;
+    const res = await fetch(
+      `${apiUrl}/grijac/${encodeURIComponent(poolId)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ state })
+      }
+    );
 
-    const payload = state.toUpperCase();
-    const topic   = `smartpool/${poolId}/heater/state`;
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`IoT API error (${res.status}): ${text}`);
+    }
 
-    client.publish(topic, payload);
-    client.end();
-
-    return NextResponse.json({ message: `Grijač ${payload}` });
+    const body = await res.json();
+    return NextResponse.json(body);
   } catch (err: any) {
-    console.error('MQTT error:', err);
+    console.error('Error setting heater state:', err);
     return NextResponse.json(
       { error: err.message || 'Greška na serveru' },
       { status: 500 }

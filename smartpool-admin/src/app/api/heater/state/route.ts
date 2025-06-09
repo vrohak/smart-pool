@@ -1,25 +1,36 @@
 import { NextResponse } from 'next/server';
-import { connect as mqttConnect, MqttClient } from 'mqtt';
 
-const brokerUrl = process.env.MQTT_BROKER_URL!;
-const client: MqttClient = mqttConnect(brokerUrl);
+const INFLUX_URL    = process.env.INFLUX_URL!;
+const INFLUX_BUCKET = process.env.INFLUX_BUCKET!;
+const INFLUX_TOKEN  = process.env.INFLUX_TOKEN!;
 
-const stateCache: Record<string, 'on' | 'off'> = {};
-
-client.on('connect', () => {
-  client.subscribe('smartpool/+/heater/state', { qos: 0 });
-});
-
-client.on('message', (topic, message) => {
-  const parts = topic.split('/');
-  if (parts.length === 4) {
-    const poolId = parts[1];
-    const payload = message.toString().toLowerCase();
-    if (payload === 'on' || payload === 'off') {
-      stateCache[poolId] = payload;
+async function queryLastState(poolId: string): Promise<'on' | 'off'> {
+  const sql = `
+    SELECT LAST(value) as lastState
+    FROM heater_state
+    WHERE pool_id='${poolId}'
+  `;
+  const res = await fetch(
+    `${INFLUX_URL}/api/v3/query_sql`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${INFLUX_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ db: INFLUX_BUCKET, q: sql.trim(), format: 'jsonl' })
     }
+  );
+  if (!res.ok) {
+    throw new Error(`InfluxDB error (${res.status})`);
   }
-});
+  const text = await res.text();
+  const line = text.trim().split('\n')[0];
+  if (!line) return 'off';
+  const obj = JSON.parse(line) as Record<string, any>;
+  const val = (obj.lastState || '').toString().toLowerCase();
+  return val === 'on' ? 'on' : 'off';
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -27,6 +38,14 @@ export async function GET(request: Request) {
   if (!poolId) {
     return NextResponse.json({ error: 'poolId query param is required' }, { status: 400 });
   }
-  const state = stateCache[poolId] ?? 'off';
-  return NextResponse.json({ poolId, state });
+  try {
+    const state = await queryLastState(poolId);
+    return NextResponse.json({ poolId, state });
+  } catch (err: any) {
+    console.error('Error fetching heater state from InfluxDB:', err);
+    return NextResponse.json(
+      { error: err.message || 'Failed to fetch heater state' },
+      { status: 500 }
+    );
+  }
 }
