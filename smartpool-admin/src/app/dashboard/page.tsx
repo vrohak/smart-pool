@@ -15,6 +15,7 @@ import {
   TableCell,
   Select,
   MenuItem,
+  Switch,
   FormControl,
   InputLabel,
   TextField,
@@ -64,7 +65,7 @@ export default function DashboardPage() {
   const [waterLevelData, setWaterLevelData] = useState<DataPoint[]>([]);
   const [uptimeData, setUptimeData] = useState<DataPoint[]>([]);
 
-  const [targetTemp, setTargetTemp] = useState<number>(25);
+  const [heaterOn, setHeaterOn] = useState<boolean>(false);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
     open: false,
     message: '',
@@ -99,17 +100,20 @@ export default function DashboardPage() {
     });
   }, [selectedPool, date]);
 
-  const handleSetTemp = async () => {
+  const handleToggleHeater = async () => {
+    const newState = !heaterOn;
     try {
       const res = await fetch('/api/heater/set', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ poolId: selectedPool, target: targetTemp }),
+        body: JSON.stringify({ poolId: selectedPool, state: newState ? 'on' : 'off' }),
       });
       if (!res.ok) throw new Error(await res.text());
-      setSnackbar({ open: true, message: 'Komanda uspješno poslana', severity: 'success' });
+      setHeaterOn(newState);
+      setSnackbar({ open: true, message: `Grijač je sada ${newState ? 'uključen' : 'isključen'}`, severity: 'success' });
     } catch (err: any) {
-      setSnackbar({ open: true, message: err.message || 'Greška pri slanju', severity: 'error' });
+      console.error(err);
+      setSnackbar({ open: true, message: err.message || 'Greška pri slanju komande', severity: 'error' });
     }
   };
 
@@ -177,16 +181,12 @@ export default function DashboardPage() {
               setDate(d.toISOString().slice(0, 10));
             }}>▶</Button>
 
-            <TextField
-              label="Target Temp (°C)"
-              type="number"
-              value={targetTemp}
-              onChange={(e) => setTargetTemp(parseFloat(e.target.value))}
+            <Switch
+              checked={heaterOn}
+              onChange={handleToggleHeater}
+              inputProps={{ 'aria-label': 'heater switch' }}
             />
-
-            <Button variant="contained" onClick={handleSetTemp}>
-              Postavi temperaturu
-            </Button>
+            <Typography>{heaterOn ? 'Grijač uključen' : 'Grijač isključen'}</Typography>
           </Paper>
         </Grid>
 

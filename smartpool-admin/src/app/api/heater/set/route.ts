@@ -6,12 +6,12 @@ const client = mqttConnect(brokerUrl);
 
 export async function POST(request: Request) {
   try {
-    const { poolId, target } = (await request.json()) as {
+    const { poolId, state } = (await request.json()) as {
       poolId: string;
-      target: number;
+      state: 'on' | 'off';
     };
 
-    const client = mqttConnect(process.env.MQTT_BROKER_URL || 'mqtt://localhost:1883');
+    const client = mqttConnect(process.env.MQTT_BROKER_URL!);
 
     await new Promise<void>((resolve, reject) => {
       client.on('connect', () => resolve());
@@ -20,16 +20,19 @@ export async function POST(request: Request) {
 
     const payload = JSON.stringify({
       poolId,
-      target,
+      state,
       timestamp: new Date().toISOString(),
     });
-    client.publish('smartpool/heater/set', payload);
 
+    client.publish('smartpool/heater/set', payload);
     client.end();
 
     return NextResponse.json({ message: 'Komanda je poslana' });
   } catch (err: any) {
     console.error('MQTT error:', err);
-    return NextResponse.json({ error: err.message || 'Greška na serveru' }, { status: 500 });
+    return NextResponse.json(
+      { error: err.message || 'Greška na serveru' },
+      { status: 500 }
+    );
   }
 }
