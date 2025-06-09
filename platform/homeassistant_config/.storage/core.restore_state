@@ -53,7 +53,7 @@
     {
       "state": {"entity_id":"sensor.pool2_water_temp","state":"unknown","attributes":{"unit_of_measurement":"°C","icon":"mdi:pool-thermometer","friendly_name":"Temperatura vode"},"last_changed":"2025-06-09T10:27:43.221941+00:00","last_reported":"2025-06-09T10:27:43.221941+00:00","last_updated":"2025-06-09T10:27:43.221941+00:00","context":{"id":"01JXA3PMFNJ1QG4DDA2RWSQ51V","parent_id":null,"user_id":null}},
       "extra_data": {
-        "native_value": null,
+        "native_value": "25.41",
         "native_unit_of_measurement": "°C"
       },
       "last_seen": "2025-06-09T10:27:43.224742+00:00"
@@ -61,7 +61,7 @@
     {
       "state": {"entity_id":"sensor.pool2_water_level","state":"unknown","attributes":{"unit_of_measurement":"%","icon":"mdi:car-coolant-level","friendly_name":"Razina vode"},"last_changed":"2025-06-09T10:27:43.222250+00:00","last_reported":"2025-06-09T10:27:43.222250+00:00","last_updated":"2025-06-09T10:27:43.222250+00:00","context":{"id":"01JXA3PMFPVM1J0MYX9AGW24J2","parent_id":null,"user_id":null}},
       "extra_data": {
-        "native_value": null,
+        "native_value": "84.3",
         "native_unit_of_measurement": "%"
       },
       "last_seen": "2025-06-09T10:27:43.224742+00:00"

@@ -1,7 +1,7 @@
 POKRETANJE:
 1) pokrenuti docker engine
 2) pozicionirati se u ovaj direktorij u naredbenom retku i pokrenuti:
-docker compose up -d
+docker compose up -d --build
 
 
 ## Uređaji
