@@ -3,6 +3,27 @@
   "minor_version": 2,
   "key": "repairs.issue_registry",
   "data": {
-    "issues": []
+    "issues": [
+      {
+        "created": "2025-06-09T11:40:18.944079+00:00",
+        "dismissed_version": null,
+        "domain": "homeassistant",
+        "is_persistent": true,
+        "issue_id": "storage_corruption_core.restore_state_2025-06-09T11:40:18.932941+00:00",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": true,
+        "issue_domain": "homeassistant",
+        "learn_more_url": null,
+        "severity": "critical",
+        "translation_key": "storage_corruption",
+        "translation_placeholders": {
+          "storage_key": "core.restore_state",
+          "original_path": "/config/.storage/core.restore_state",
+          "corrupt_path": "/config/.storage/core.restore_state.corrupt.2025-06-09T11:40:18.932941+00:00",
+          "error": "Error while loading /config/.storage/core.restore_state: unexpected character: line 7 column 1 (char 95)"
+        }
+      }
+    ]
   }
 }
