@@ -4,6 +4,7 @@
   "key": "core.restore_state",
   "data": [
     {
+<<<<<<< Updated upstream
       "state": {"entity_id":"conversation.home_assistant","state":"unknown","attributes":{"friendly_name":"Home Assistant","supported_features":1},"last_changed":"2025-06-09T11:18:44.227206+00:00","last_reported":"2025-06-09T11:18:44.227206+00:00","last_updated":"2025-06-09T11:18:44.227206+00:00","context":{"id":"01JXA6M1R3TVNNWYSCVY4CTS4C","parent_id":null,"user_id":null}},
       "extra_data": null,
       "last_seen": "2025-06-09T11:31:49.551548+00:00"
@@ -70,6 +71,74 @@
       "state": {"entity_id":"switch.pool1_heater","state":"off","attributes":{"icon":"mdi:heating-coil","friendly_name":"Grijač"},"last_changed":"2025-06-09T11:31:29.783265+00:00","last_reported":"2025-06-09T11:31:29.783265+00:00","last_updated":"2025-06-09T11:31:29.783265+00:00","context":{"id":"01JXA7BDBQDDFZ00X5YREZ03QZ","parent_id":null,"user_id":null}},
       "extra_data": null,
       "last_seen": "2025-06-09T11:31:49.551548+00:00"
+=======
+      "state": {"entity_id":"conversation.home_assistant","state":"unknown","attributes":{"friendly_name":"Home Assistant","supported_features":1},"last_changed":"2025-06-09T11:08:16.821186+00:00","last_reported":"2025-06-09T11:08:16.821186+00:00","last_updated":"2025-06-09T11:08:16.821186+00:00","context":{"id":"01JXA60X1N5KE80PVCFE81FNTH","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"person.stela","state":"unknown","attributes":{"editable":true,"id":"stela","device_trackers":[],"user_id":"9bf6a99bafcd4a139c674244628d3121","friendly_name":"stela"},"last_changed":"2025-06-09T11:08:17.573189+00:00","last_reported":"2025-06-09T11:08:18.960401+00:00","last_updated":"2025-06-09T11:08:18.960401+00:00","context":{"id":"01JXA60Z4GE6PGF911WHRCCXFT","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.google_translate_en_com","state":"unknown","attributes":{"friendly_name":"Google Translate en com"},"last_changed":"2025-06-09T11:08:18.382470+00:00","last_reported":"2025-06-09T11:08:18.382470+00:00","last_updated":"2025-06-09T11:08:18.382470+00:00","context":{"id":"01JXA60YJETJQF0X4Z6W6HE1CW","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"switch.pool1_heater","state":"on","attributes":{"icon":"mdi:heating-coil","friendly_name":"Grijač"},"last_changed":"2025-06-09T11:08:19.538037+00:00","last_reported":"2025-06-09T11:08:19.538037+00:00","last_updated":"2025-06-09T11:08:19.538037+00:00","context":{"id":"01JXA60ZPJ41S9F5KPQB9N62GF","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.pool1_water_temp","state":"unknown","attributes":{"unit_of_measurement":"°C","icon":"mdi:pool-thermometer","friendly_name":"Temperatura vode"},"last_changed":"2025-06-09T11:08:18.956370+00:00","last_reported":"2025-06-09T11:08:18.956370+00:00","last_updated":"2025-06-09T11:08:18.956370+00:00","context":{"id":"01JXA60Z4CBC60JW808P1HKS4W","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "°C"
+      },
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.pool1_water_level","state":"unknown","attributes":{"unit_of_measurement":"%","icon":"mdi:car-coolant-level","friendly_name":"Razina vode"},"last_changed":"2025-06-09T11:08:18.956506+00:00","last_reported":"2025-06-09T11:08:18.956506+00:00","last_updated":"2025-06-09T11:08:18.956506+00:00","context":{"id":"01JXA60Z4CQQEWTVFZHEZE0RE3","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.pool1_chlorine","state":"unknown","attributes":{"unit_of_measurement":"mg/L","icon":"mdi:shaker-outline","friendly_name":"Klor"},"last_changed":"2025-06-09T11:08:18.957303+00:00","last_reported":"2025-06-09T11:08:18.957303+00:00","last_updated":"2025-06-09T11:08:18.957303+00:00","context":{"id":"01JXA60Z4D8DKED1975CVG6KHN","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "mg/L"
+      },
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.pool1_air_temp","state":"unknown","attributes":{"unit_of_measurement":"°C","icon":"mdi:thermometer","friendly_name":"Temperatura zraka"},"last_changed":"2025-06-09T11:08:18.957616+00:00","last_reported":"2025-06-09T11:08:18.957616+00:00","last_updated":"2025-06-09T11:08:18.957616+00:00","context":{"id":"01JXA60Z4DP79WR161WZCN528A","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "°C"
+      },
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.pool2_water_temp","state":"unknown","attributes":{"unit_of_measurement":"°C","icon":"mdi:pool-thermometer","friendly_name":"Temperatura vode"},"last_changed":"2025-06-09T11:08:18.957765+00:00","last_reported":"2025-06-09T11:08:18.957765+00:00","last_updated":"2025-06-09T11:08:18.957765+00:00","context":{"id":"01JXA60Z4DP3G22ZC2CQPBPKH2","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "°C"
+      },
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.pool2_water_level","state":"unknown","attributes":{"unit_of_measurement":"%","icon":"mdi:car-coolant-level","friendly_name":"Razina vode"},"last_changed":"2025-06-09T11:08:18.957940+00:00","last_reported":"2025-06-09T11:08:18.957940+00:00","last_updated":"2025-06-09T11:08:18.957940+00:00","context":{"id":"01JXA60Z4DBBSFD18N9A3ARRV7","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2025-06-09T11:23:18.891600+00:00"
+>>>>>>> Stashed changes
     },
     {
       "state": {"entity_id":"switch.grijac_2","state":"off","attributes":{"friendly_name":"Grijač"},"last_changed":"2025-06-04T09:14:29.338729+00:00","last_reported":"2025-06-04T09:14:29.338729+00:00","last_updated":"2025-06-04T09:14:29.338729+00:00","context":{"id":"01JWX3GYJT61JVA9W08PR0WNMX","parent_id":null,"user_id":null}},

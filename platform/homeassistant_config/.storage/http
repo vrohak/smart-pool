@@ -12,8 +12,19 @@
       "0.0.0.0",
       "::"
     ],
+<<<<<<< Updated upstream
     "server_port": 8123,
     "use_x_frame_options": true,
     "login_attempts_threshold": -1
+=======
+    "login_attempts_threshold": -1,
+    "cors_allowed_origins": [
+      "https://cast.home-assistant.io"
+    ],
+    "ssl_profile": "modern",
+    "ip_ban_enabled": true,
+    "use_x_frame_options": true,
+    "server_port": 8123
+>>>>>>> Stashed changes
   }
 }
