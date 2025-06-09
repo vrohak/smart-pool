@@ -5,7 +5,7 @@ import random
 import threading
 import paho.mqtt.client as mqtt
 
-MQTT_BROKER     = "host.docker.internal" # ili "localhost"
+MQTT_BROKER     = "mosquitto" # ili "localhost"
 MQTT_PORT       = 1883
 PUBLISH_INTERVAL = 10
 

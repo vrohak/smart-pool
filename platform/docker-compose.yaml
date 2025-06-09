@@ -53,7 +53,20 @@ services:
   mqtt_api:
     build: ./mqtt_api
     ports:
-      - "5000:5000"
+      - "5001:5001"
     depends_on:
       - mosquitto
-
+      
+  virtual_device:
+    build: ./virtual_device
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mosquitto
+  
+  fake_device:
+    build: ./fake_device
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mosquitto
