@@ -98,6 +98,17 @@ export default function DashboardPage() {
           setSnackbar({ open: true, message: 'Greška pri dohvaćanju podataka', severity: 'error' });
         });
     });
+    fetch(`/api/heater/state?poolId=${selectedPool}`)
+    .then(res => {
+      if (!res.ok) throw new Error('No state');
+      return res.json();
+    })
+    .then((body: { state: 'on' | 'off' }) => {
+      setHeaterOn(body.state === 'on');
+    })
+    .catch(() => {
+      setHeaterOn(false);
+    });
   }, [selectedPool, date]);
 
   const handleToggleHeater = async () => {
@@ -223,15 +234,6 @@ export default function DashboardPage() {
             <Typography variant="h6">Razina vode ({date})</Typography>
             <Box sx={{ height: 250, position: 'relative' }}>
               <Line data={makeLineChart('Water Level', waterLevelData, 'rgba(255,206,86,1)')} options={{ maintainAspectRatio: false }} />
-            </Box>
-          </Paper>
-        </Grid>
-
-        <Grid size={{ xs: 12, md: 12 }}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6">Uptime / Downtime ({date})</Typography>
-            <Box sx={{ height: 200, position: 'relative' }}>
-              <Line data={makeLineChart('Uptime (1=UP,0=DOWN)', uptimeData, 'rgba(153,102,255,1)')} options={{ maintainAspectRatio: false, scales: { y: { min: 0, max: 1, ticks: { stepSize: 1 } } } }} />
             </Box>
           </Paper>
         </Grid>
