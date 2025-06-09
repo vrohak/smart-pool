@@ -1,13 +1,5 @@
 version: '3.8'
 services:
-  mqtt_api:
-    build: ./mqtt_api
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mosquitto
-    environment:
-      - MQTT_BROKER_URL=mqtt://mosquitto:1883
   postgres:
     image: postgres:14
     env_file:
