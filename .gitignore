@@ -163,6 +163,12 @@ ozw_log.txt
 # Node-RED runtime config file (contains the credentialSecret if not overridden)
 .config.json
 
+# mosquitto
+mosquitto.db
+
+#influxdb3
+influxdb3/data
+
 # docker mac
 
 __MACOSX/
