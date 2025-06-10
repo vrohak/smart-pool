@@ -6,9 +6,11 @@ const INFLUX_TOKEN  = process.env.INFLUX_TOKEN!;
 
 async function queryLastState(poolId: string): Promise<'on' | 'off'> {
   const sql = `
-    SELECT LAST(value) as lastState
-    FROM heater_state
+    SELECT state AS lastState 
+    FROM heater_state 
     WHERE pool_id='${poolId}'
+    ORDER BY time DESC 
+    LIMIT 1
   `;
   const res = await fetch(
     `${INFLUX_URL}/api/v3/query_sql`,
@@ -27,9 +29,9 @@ async function queryLastState(poolId: string): Promise<'on' | 'off'> {
   const text = await res.text();
   const line = text.trim().split('\n')[0];
   if (!line) return 'off';
-  const obj = JSON.parse(line) as Record<string, any>;
-  const val = (obj.lastState || '').toString().toLowerCase();
-  return val === 'on' ? 'on' : 'off';
+  const obj = JSON.parse(line) as { laststate?: number };
+  const val = (obj.laststate || '');
+  return val === 1 ? 'on' : 'off';
 }
 
 export async function GET(request: Request) {

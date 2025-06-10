@@ -110,7 +110,7 @@
         "type": "function",
         "z": "82b036b565dac812",
         "name": "format heater_state",
-        "func": "const m = msg.data.new_state;\nmsg.measurement = 'heater_state';\nmsg.tags = { heater: 'heater1' };\nmsg.payload = { state: m.state === 'on' ? 1 : 0 };\nmsg.timestamp = new Date(m.last_changed).getTime()*1e6;\nreturn msg;",
+        "func": "const m = msg.data.new_state;\nmsg.measurement = 'heater_state';\nmsg.tags = { heater: 'heater1' };\nmsg.payload = { pool_id: 'pool1', state: m.state === 'on' ? 1 : 0 };\nmsg.timestamp = new Date(m.last_changed).getTime()*1e6;\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,

@@ -1,0 +1,2 @@
+idb3.003.lm¢j
+{"catalog_batch":{"Database":{"time_ns":1749547858818822836,"database_id":1,"database_name":"smartpool","ops":[{"AddFields":{"database_name":"smartpool","database_id":1,"table_name":"heater_state","table_id":1,"field_definitions":[{"name":"pool_id","id":2,"data_type":"String"}]}}]}},"sequence_number":19}
