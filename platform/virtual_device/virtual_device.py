@@ -20,7 +20,7 @@ client.connect(MQTT_BROKER_HOST, MQTT_BROKER_PORT, 60)
 
 while True:
     client.publish("smartpool/2/sensor/water_temp", round(random.uniform(25, 30), 2))
-    client.publish("smartpool/2/sensor/water_level", round(random.uniform(70, 100), 1))
+    client.publish("smartpool/2/sensor/water_level", round(random.uniform(0.5, 0.9), 1))
     print("Metrike poslane.")
     time.sleep(PUBLISH_INTERVAL)
 

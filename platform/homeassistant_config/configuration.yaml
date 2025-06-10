@@ -20,7 +20,7 @@ mqtt:
     - name: "Razina vode"
       state_topic: "smartpool/1/sensor/water_level"
       unique_id: water_level_1
-      unit_of_measurement: "%"
+      unit_of_measurement: "m"
 
     - name: "Klor"
       state_topic: "smartpool/1/sensor/chlorine"
@@ -40,7 +40,7 @@ mqtt:
     - name: "Razina vode"
       state_topic: "smartpool/2/sensor/water_level"
       unique_id: water_level_2
-      unit_of_measurement: "%"
+      unit_of_measurement: "m"
 
   switch:
     - name: "Grijač"

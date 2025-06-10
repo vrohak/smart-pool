@@ -2,6 +2,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Add a .env file like this:
+```
+DATABASE_URL="postgresql://postgres:<password>@localhost:5433/smartpool"
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=<password>
+POSTGRES_DB=smartpool
+MQTT_BROKER_URL="mqtt://<platform_ip>:1883"
+INFLUX_URL="http://<platform_ip>:8181"
+INFLUX_TOKEN=<influxdb_token>
+INFLUX_BUCKET="smartpool"
+IOT_API_URL="http://<platform_ip>:5001"
+JWT_SECRET=<secret_key>
+```
+
+
 ```
 npm install
 
