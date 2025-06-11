@@ -1,0 +1,19 @@
+dependencies:
+  espressif/led_strip:
+    component_hash: b578eb926d9f6402fd45398b53c9bd5d1b7a15c1b2974d25aa3088e6c79b0b4c
+    source:
+      type: service
+    version: 3.0.1
+  idf:
+    component_hash: null
+    source:
+      type: idf
+    version: 5.1.1
+  zorxx/dht:
+    component_hash: 6a5e699b15509d99b90352694e23beb6646855486eb3bafefd1d50058d474e98
+    source:
+      type: service
+    version: 1.0.1
+manifest_hash: c18277a306158c73b86ae8030635a56d5d7eacd4442c689808c8737fa884a23b
+target: esp32c6
+version: 1.0.0
